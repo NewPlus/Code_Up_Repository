@@ -4,3 +4,4 @@ numpy
 pytorch-lightning
 einops-exts
 matplotlib
+lightning
