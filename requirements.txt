@@ -1,7 +1,13 @@
-torch>=1.13.1
-torchvision
 numpy
+pandas
+torch
+torchvision
 pytorch-lightning
+transformers
 einops-exts
 matplotlib
 lightning
+black
+tensorboard
+torchtext
+torchdata
