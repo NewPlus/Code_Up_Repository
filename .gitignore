@@ -1,2 +1,6 @@
 /BERT/__pycache__
+/BERT/pretrained/tb_logs
+/BERT/pretrained/__pycache__
+/BERT/self_making/tb_logs
+/BERT/self_making/__pycache__
 /BERT/tb_logs
