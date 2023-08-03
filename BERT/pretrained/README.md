@@ -25,3 +25,9 @@ python train.py \
 --ACCELERATOR "gpu" \
 --PRETRAIN_MODEL "bert-base-uncased"
 ```
+
+## Result(IMDB)
+- Model Summary
+[model_summary](./img/bert_summary.JPG)
+- Test Result
+[test_result](./img/bert_test_result.JPG)
