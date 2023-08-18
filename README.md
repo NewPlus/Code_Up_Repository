@@ -18,3 +18,8 @@
     - Reference
         - [Huggingface BERT](https://github.com/huggingface/transformers/blob/v4.31.0/src/transformers/models/bert/modeling_bert.py#L407)
         - [BERT code 이해](https://hyen4110.tistory.com/87)
+- GPT
+- Llama 2
+    - [Llama2](https://ai.meta.com/research/publications/llama-2-open-foundation-and-fine-tuned-chat-models/) : Open Foundation and Fine-Tuned Chat Models
+    - [Paper](https://scontent-gmp1-1.xx.fbcdn.net/v/t39.2365-6/10000000_662098952474184_2584067087619170692_n.pdf?_nc_cat=105&ccb=1-7&_nc_sid=3c67a6&_nc_ohc=04ReMOti9ikAX9OFWA-&_nc_ht=scontent-gmp1-1.xx&oh=00_AfAMq91fcix38YnC9vr7sNA_IqDrQ1sk4hPbxzfYPidZIw&oe=64E3F9BF)
+    

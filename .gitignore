@@ -4,3 +4,5 @@
 /BERT/self_making/tb_logs
 /BERT/self_making/__pycache__
 /BERT/tb_logs
+/Llama2/hf_llama2_weight
+/Llama2/llama-2-7b

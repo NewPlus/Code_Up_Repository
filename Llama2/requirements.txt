@@ -1,13 +1,8 @@
-numpy
-pandas
 torch
 torchvision
-pytorch-lightning
-transformers
-einops-exts
-matplotlib
+torchaudio
 lightning
-black
+transformers
 tensorboard
 torchtext
 torchdata
