@@ -6,3 +6,4 @@
 /BERT/tb_logs
 /Llama2/hf_llama2_weight_7b
 /Llama2/hf_llama2_weight_13b
+/Llama2/__pycache__
