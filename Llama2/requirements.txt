@@ -4,10 +4,10 @@ sentencepiece
 torch
 torchvision
 torchaudio
-lightning
 transformers
-tensorboard
 torchtext
 torchdata
-accelerate
+opencv-python
+autotrain-advanced
 peft
+bitsandbytes
