@@ -37,3 +37,11 @@ CUDA_VISIBLE_DEVICES=0 autotrain llm --train \
     --trainer sft \
     --model_max_length 2048
 ```
+
+- test run
+```
+python test.py
+```
+
+## Test Result
+![Test Result](img/img_test_result_01.png)

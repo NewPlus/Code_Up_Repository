@@ -1,45 +1,51 @@
-from transformers import LlamaForCausalLM, AutoTokenizer  # , LlamaForSequenceClassification
-from peft import LoraConfig, get_peft_model
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+from peft import PeftModel, PeftConfig
 
+model_id = "TinyPixel/Llama-2-7B-bf16-sharded"
+peft_model_id = "./ko-llama2-finetune/checkpoint-3690"
 
-def print_trainable_parameters(model):
-    trainable_params = 0
-    all_param = 0
-    for _, param in model.named_parameters():
-        all_param += param.numel()
-        if param.requires_grad:
-            trainable_params += param.numel()
-    print(
-        f"trainable params: {trainable_params} ||\
-          all params: {all_param} || trainable%: {100 * trainable_params / all_param:.2f}"
-    )
+config = PeftConfig.from_pretrained(peft_model_id)
 
-
-# model_path = "./hf_llama2_weight_13b"
-# model_path = ".../nas_yh/llama-2-weights/hf_llama2_weight"
-model_path = "/root/nas_yh/llama-2-weights/hf_llama2_weight"
-tokenizer = AutoTokenizer.from_pretrained(model_path)
-model = LlamaForCausalLM.from_pretrained(model_path)
-# model = LlamaForSequenceClassification.from_pretrained(model_path)
-# print(model)
-print_trainable_parameters(model)
-
-config = LoraConfig(
-    r=16,
-    lora_alpha=16,
-    lora_dropout=0.1,
-    bias="none",
-    modules_to_save=["classifier"],
+bnb_config = BitsAndBytesConfig(
+    load_in_8bit=False,
+    load_in_4bit=True,
+    llm_int8_threshold=6.0,
+    llm_int8_skip_modules=None,
+    llm_int8_enable_fp32_cpu_offload=False,
+    llm_int8_has_fp16_weight=False,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_use_double_quant=False,
+    bnb_4bit_compute_dtype="float16",
 )
-lora_model = get_peft_model(model, config)
-print_trainable_parameters(lora_model)
 
-prompt = "Hey, are you conscious? Can you talk to me?"
-inputs = tokenizer(prompt, return_tensors="pt")
-outputs = model(**inputs)
-# print(outputs)
+model = AutoModelForCausalLM.from_pretrained(model_id, quantization_config=bnb_config, device_map="auto")
+model = PeftModel.from_pretrained(model, peft_model_id)
+tokenizer = AutoTokenizer.from_pretrained(model_id)
 
-# Generate
-# generate_ids = model.generate(inputs.input_ids, max_length=100)
-# outputs = tokenizer.batch_decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
-# print(f"out : {outputs}")
+# print(model.eval())
+
+prompt = "Below is an instruction that describes a task. Write a response that appropriately completes the request. ### Instruction: %s ### Response: "
+
+
+def gen(x):
+    q = prompt % (x,)
+    gened = model.generate(
+        **tokenizer(
+            q,
+            return_tensors='pt',
+            return_token_type_ids=False,
+        ).to('cuda'),
+        max_new_tokens=128,
+        early_stopping=True,
+        do_sample=True,
+        num_beams=4,
+    )
+    return tokenizer.decode(gened[0]).replace(q, "")
+
+
+print("Q: 태풍이 오면 어떻게 해야하나요?")
+print(gen("태풍이 오면 어떻게 해야하나요?"))
+print("Q: 사과는 무슨 맛인가요?")
+print(gen("사과는 무슨 맛인가요?"))
+print("Q: 인생에서 무엇이 가장 중헌가요?")
+print(gen("인생에서 무엇이 가장 중헌가요?"))
