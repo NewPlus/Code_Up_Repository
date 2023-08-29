@@ -15,7 +15,7 @@ pip install -r requirements.txt
 autotrain setup --update-torch
 ```
 
-## Run
+## Example Run
 - Datasets
     - koalpaca data : royboy0416/ko-alpaca | [Link](https://huggingface.co/datasets/royboy0416/ko-alpaca)
     ![example](img/koalapca_example.png)
@@ -45,3 +45,34 @@ python test.py
 
 ## Test Result
 ![Test Result](img/img_test_result_01.png)
+
+# Custom Fine-Tuning
+## IMDB Dataset Preprocessing
+- Preprocessing IMDB.csv for Tuning
+```
+python data_preprocess.py
+```
+- Processing Result
+![Processing Result](img/img_Processing_Result.png)
+
+## Run
+- Training(AutoTrain Tuning) Setting
+```
+CUDA_VISIBLE_DEVICES=0 autotrain llm --train \
+    --project_name "ko-llama2-finetune" \
+    --model "TinyPixel/Llama-2-7B-bf16-sharded" \
+    --data_path . \
+    --text_column "text" \
+    --use_peft \
+    --use_int4 \
+    --learning_rate 2e-4 \
+    --train_batch_size 8 \
+    --num_train_epochs 3 \
+    --trainer sft \
+    --model_max_length 2048
+```
+
+- test run
+```
+python test.py
+```
