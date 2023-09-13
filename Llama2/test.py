@@ -2,6 +2,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 from peft import PeftModel, PeftConfig
 
 model_id = "TinyPixel/Llama-2-7B-bf16-sharded"
+# peft_model_id = "./llama2-7b-imdb-finetuning/checkpoint-6690"
 peft_model_id = "./ko-llama2-finetune/checkpoint-3690"
 
 config = PeftConfig.from_pretrained(peft_model_id)
@@ -23,7 +24,7 @@ model = PeftModel.from_pretrained(model, peft_model_id)
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 
 # print(model.eval())
-
+# Below is an Review that describes a movie. Write a Sentiment that appropriately completes the request. 
 prompt = "Below is an instruction that describes a task. Write a response that appropriately completes the request. ### Instruction: %s ### Response: "
 
 
@@ -43,6 +44,7 @@ def gen(x):
     return tokenizer.decode(gened[0]).replace(q, "")
 
 
+# Korean Examples
 print("Q: 태풍이 오면 어떻게 해야하나요?")
 print(gen("태풍이 오면 어떻게 해야하나요?"))
 print("Q: 사과는 무슨 맛인가요?")

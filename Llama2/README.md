@@ -58,8 +58,8 @@ python data_preprocess.py
 ## Run
 - Training(AutoTrain Tuning) Setting
 ```
-CUDA_VISIBLE_DEVICES=0 autotrain llm --train \
-    --project_name "ko-llama2-finetune" \
+CUDA_VISIBLE_DEVICES=1 autotrain llm --train \
+    --project_name "llama2-7b-imdb-finetuning" \
     --model "TinyPixel/Llama-2-7B-bf16-sharded" \
     --data_path . \
     --text_column "text" \
@@ -69,7 +69,7 @@ CUDA_VISIBLE_DEVICES=0 autotrain llm --train \
     --train_batch_size 8 \
     --num_train_epochs 3 \
     --trainer sft \
-    --model_max_length 2048
+    --model_max_length 2100
 ```
 
 - test run
