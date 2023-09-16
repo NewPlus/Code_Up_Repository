@@ -38,6 +38,19 @@ CUDA_VISIBLE_DEVICES=0 autotrain llm --train \
     --model_max_length 2048
 ```
 
+autotrain llm --train \
+    --project_name "ko-llama2-finetune" \
+    --model "meta-llama/Llama-2-13b-hf" \
+    --data_path "royboy0416/ko-alpaca" \
+    --text_column "text" \
+    --use_peft \
+    --use_int4 \
+    --learning_rate 2e-4 \
+    --train_batch_size 16 \
+    --num_train_epochs 3 \
+    --trainer sft \
+    --model_max_length 2048
+
 - test run
 ```
 python test.py
